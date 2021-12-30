@@ -5,41 +5,42 @@ export const GifGrid = ({category})=>{
 
   const [images, setImages] = useState([]);
   useEffect( ()=>{
-    getGifs();
+	getGifs();
   }, [])
 
   const getGifs = async()=>{
-    const url = 'https://api.giphy.com/v1/gifs/search?q=rick+and+morty&limit=10&api_key=xyCIIKFbRy9m3Kb6NVrck1JIoKhHdMrK';
+	const url = 'https://api.giphy.com/v1/gifs/search?q=rick+and+morty&limit=10&api_key=xyCIIKFbRy9m3Kb6NVrck1JIoKhHdMrK';
 
-    const resp = await fetch( url );
-    const {data} = await resp.json();
+	const resp = await fetch( url );
+	const {data} = await resp.json();
 
-    const gifs = data.map( img=> {
-      return{
-        id: img.id,
-        title: img.title,
-        url: img.images?.downsized_medium.url
-      }
-    })
+	const gifs = data.map( img=> {
+		return{
+			id: img.id,
+			title: img.title,
+			url: img.images?.downsized_medium.url
+		}
+	})
 
-    console.log( gifs );
-    setImages( gifs );
+	console.log( gifs );
+	setImages( gifs );
   }
 
-  return(
-    <div>
-      <h3> { category } </h3>
-      
-      {
-        images.map( img => (
-          <GifGridItem 
-            key={ img.id }
-            // img={ img }
-            {...img}
-          />
-        ))
-      }
-    
-    </div>
-  )
+	return(
+		<>
+		
+			<h3> { category } </h3>
+			<div className="card-grid">
+				{
+					images.map( img => (
+					<GifGridItem 
+						key={ img.id }
+						// img={ img }
+						{...img}
+					/>
+					))
+				}
+			</div>
+		</>
+	)
 }
